@@ -1,10 +1,7 @@
-## Put comments here that give an overall description of what your
-## functions do
 
-## Write a short comment describing this function
-
+## Creates a matrix object with 4 methods (set, setInv, get, getInv)
 makeCacheMatrix <- function(x = matrix()) {
-     m <- NULL
+     m <- NULL  ## cached version of inverse
      set <- function(y) {
           x <<- y
           m <<- NULL
@@ -20,8 +17,8 @@ makeCacheMatrix <- function(x = matrix()) {
 }
 
 
-## Write a short comment describing this function
-
+## Inverts the contents of the matrix object
+## Uses the cached inverse if it is set
 cacheSolve <- function(x, ...) {
      ## Return a matrix that is the inverse of 'x'
      m <- x$getInv()
@@ -32,36 +29,5 @@ cacheSolve <- function(x, ...) {
      data <- x$get()
      m <- solve(data, ...)
      x$setInv(m)
-     m
-}
-
-
-
-## Original Examples
-
-makeVector <- function(x = numeric()) {
-     m <- NULL
-     set <- function(y) {
-          x <<- y
-          m <<- NULL
-     }
-     get <- function() x
-     setmean <- function(mean) m <<- mean
-     getmean <- function() m
-     list(set = set, get = get,
-          setmean = setmean,
-          getmean = getmean)
-}
-
-
-cachemean <- function(x, ...) {
-     m <- x$getmean()
-     if(!is.null(m)) {
-          message("getting cached data")
-          return(m)
-     }
-     data <- x$get()
-     m <- mean(data, ...)
-     x$setmean(m)
      m
 }
